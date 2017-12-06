@@ -1,8 +1,8 @@
 class Mdd:
 
    def __init__(self):
-      self.nesId = 0
-      self.tempId = 0
+      self.nesId = "not assigned yet"
+      self.tempId = "not assigned yet"
 
    #def __init__(self, nesId, tempId):
    #   self.nesId = nesId

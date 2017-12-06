@@ -15,5 +15,8 @@ def attachNSSF(ueIp, serviceType):
    #response =  c.call.networkAttach(ueIp, serviceType)
    #response = "attached vBBU-NSSF"
    response = Mdd()
+   #response.ok = "OK"
+   #response.nesId = 7526
    print "attaching vBBU-NSSF response: ", response.nesId
-   return response.nesId
+   responsePickled = pickle.dumps(response)
+   return responsePickled
