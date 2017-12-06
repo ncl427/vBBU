@@ -1,4 +1,6 @@
 from bjsonrpc import connect
+import pickle
+from models.Mdd import Mdd
 
 def attachNSSF(ueIp, serviceType):
    nssfIp = "117.17.102.21"
@@ -11,6 +13,7 @@ def attachNSSF(ueIp, serviceType):
 
    print "...attaching vBBU-NSSF: ", ueIp, " - ", serviceType
    #response =  c.call.networkAttach(ueIp, serviceType)
-   response = "attached vBBU-NSSF"
-   print "attaching vBBU-NSSF response: ", response
-   return response
+   #response = "attached vBBU-NSSF"
+   response = Mdd()
+   print "attaching vBBU-NSSF response: ", response.nesId
+   return response.nesId
