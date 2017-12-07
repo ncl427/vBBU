@@ -2,21 +2,40 @@ from bjsonrpc import connect
 import pickle
 from models.Mdd import Mdd
 
+# global-variables
+nssfConnect = False
+nssfIp = "117.17.102.129"
+nssfPort = 10123
+
 def attachNSSF(ueIp, serviceType):
-   nssfIp = "117.17.102.21"
-   nssfPort = 10123
 
-   print "\n--------------------------"
-   print "...connecting to vBBU-NSSF"
-   #c = connect(nssfIp)
-   print "connected vBBU-NSSF."
+   if(nssfConnect):
+      return attachReal(ueIp, serviceType)
+   else:
+      return attachFake(ueIp, serviceType)
 
-   print "...attaching vBBU-NSSF: ", ueIp, " - ", serviceType
-   #response =  c.call.networkAttach(ueIp, serviceType)
-   #response = "attached vBBU-NSSF"
-   response = Mdd()
-   #response.ok = "OK"
-   #response.nesId = 7526
-   print "attaching vBBU-NSSF response: ", response.nesId
-   responsePickled = pickle.dumps(response)
-   return responsePickled
+def attachReal(ueIp, serviceType):
+   print "\n--------------------------\n...connecting to vBBU-NSSF"
+   c = connect(nssfIp)
+   print "connected vBBU-NSSF.\n...attaching vBBU-NSSF"
+   response =  c.call.networkAttach(ueIp, serviceType)
+   printNSSFresponse(response)
+
+   return response
+
+def attachFake(ueIp, serviceType):
+   print "\n--------------------------\n...connecting to vBBU-NSSF"
+   print "connected vBBU-NSSF.\n...attaching vBBU-NSSF"
+   response1 = Mdd()
+   response = pickle.dumps(response1)
+   vwNssfAttResponse(response)
+
+   return response
+
+def vwNssfAttResponse(Mdd):
+   obj = pickle.loads(Mdd)
+   print "attaching vBBU-NSSF response: "
+   print "\tMdd-nesId: ", obj.nesId
+   print "\tMdd-tempId: ", obj.tempId
+   print "attached vBBU-NSSf."
+
