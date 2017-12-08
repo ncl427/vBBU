@@ -8,29 +8,30 @@ nssfConnect = False
 nssfIp = "117.17.102.129"
 nssfPort = 10123
 
-def attachNSSF(ueIp, serviceType, ueAttachedObj):
+def attachNSSF(ueAttachedObj):
 
    if(nssfConnect):
-      return attachReal(ueIp, serviceType, ueAttachedObj)
+      return attachReal(ueAttachedObj)
    else:
-      return attachFake(ueIp, serviceType, ueAttachedObj)
+      return attachFake(ueAttachedObj)
 
-def attachReal(ueIp, serviceType, ueAttachedObj):
+def attachReal(ueAttachedObj):
    print "\n--------------------------\n...connecting to vBBU-NSSF"
    c = connect(nssfIp)
    print "connected vBBU-NSSF.\n...attaching vBBU-NSSF"
 
    ueAttachedObjUnpickled = pickle.loads(ueAttachedObj)
-   print "ueAttachObj: "
+   print "ueAttachObj:"
    print "\t", ueAttachedObjUnpickled.ip
    print "\t", ueAttachedObjUnpickled.serviceType
 
-   response =  c.call.networkAttach(ueIp, serviceType, ueAttachedObjUnpickled)
+   #response =  c.call.networkAttach(ueIp, serviceType, ueAttachedObjUnpickled)
+   response =  c.call.networkAttach(ueAttachedObj)
    printNSSFresponse(response)
 
    return response
 
-def attachFake(ueIp, serviceType, ueAttachedObj):
+def attachFake(ueAttachedObj):
    print "\n--------------------------\n...connecting to vBBU-NSSF"
    print "connected vBBU-NSSF.\n...attaching vBBU-NSSF"
 
@@ -43,11 +44,11 @@ def attachFake(ueIp, serviceType, ueAttachedObj):
    response1.nesId = 526
    response1.tempId = 7
    response = pickle.dumps(response1)
-   vwNssfAttResponse(response)
+   printNSSFresponse(response)
 
    return response
 
-def vwNssfAttResponse(Mdd):
+def printNSSFresponse(Mdd):
    obj = pickle.loads(Mdd)
    print "attaching vBBU-NSSF response: "
    print "\tMdd-nesId: ", obj.nesId

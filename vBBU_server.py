@@ -5,8 +5,8 @@ from bjsonrpc import createserver
 # class for server handlers
 class ServerHandler(BaseHandler):
 
-   def attachvBBU(self, ueIp, serviceType, ueAttachedObj):
-      return attachNSSF(ueIp, serviceType, ueAttachedObj)
+   def attachvBBU(self, ueAttachedObj):
+      return attachNSSF(ueAttachedObj)
 
 # creating the server to listen 
 s = createserver(host="192.168.186.61", port=10123, handler_factory=ServerHandler)
